@@ -71,20 +71,11 @@ class SimpleMicStream(CustomAudioStream) :
     Implements mic stream with sliding window, 
     implemented by inheriting CustomAudioStream
     """
-    def __init__(self,window_length_secs=1, sliding_window_secs:float=1/8):
+    def __init__(self,window_length_secs=1, sliding_window_secs:float=1/8, mic_stream=pyaudio.PyAudio):
         p=pyaudio.PyAudio()
 
         CHUNK = int(sliding_window_secs*RATE)
         print("Chunk size", CHUNK)
-        mic_stream=p.open(
-            format=pyaudio.paInt16,
-            channels=1,
-            rate=16000,
-            input=True,
-            frames_per_buffer=CHUNK
-        )
-
-        mic_stream.stop_stream()
 
         CustomAudioStream.__init__(
             self,
